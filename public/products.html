@@ -117,6 +117,37 @@
     .dark .product-desc {
       color: rgba(255,255,255,0.8);
     }
+    /* Search Bar */
+.search-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.search-wrapper input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 20px;
+  border: 2px solid var(--gold);
+  border-radius: 40px;
+  outline: none;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--brown-dark);
+  transition: 0.3s ease;
+}
+
+.search-wrapper input:focus {
+  box-shadow: 0 0 10px rgba(201, 160, 61, 0.3);
+}
+
+.dark .search-wrapper input {
+  background: var(--brown-dark);
+  color: var(--white);
+  border: 2px solid var(--gold);
+}
   </style>
 </head>
 <body>
@@ -166,6 +197,15 @@
   </div>
 
   <div class="products-inner" style="padding: 0 30px 80px;">
+    <!-- Search Bar -->
+<div class="search-wrapper">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search brownies, cakes, cookies..."
+    onkeyup="searchProducts()"
+  />
+</div>
     <!-- Price Filter from main branch -->
     <div class="price-filter-wrapper">
       <div class="price-filter">
@@ -282,5 +322,50 @@
       if (typeof updateThemeIcon === 'function') updateThemeIcon();
     });
   </script>
+  <script>
+  function searchProducts() {
+
+    const input = document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+    const filteredProducts = productsList.filter(product =>
+      product.name.toLowerCase().includes(input) ||
+      product.category.toLowerCase().includes(input) ||
+      product.desc.toLowerCase().includes(input)
+    );
+
+    renderFilteredProducts(filteredProducts);
+  }
+
+  function renderFilteredProducts(products) {
+
+    const container = document.getElementById('allProductsGrid');
+
+    container.innerHTML = products.map(p => `
+      <div class="product-card">
+        <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
+
+        <div class="product-info">
+          <div class="product-title">${p.name}</div>
+
+          <div class="product-category">${p.category}</div>
+
+          <div class="product-desc">${p.desc}</div>
+
+          <div class="product-price">₹${p.price}</div>
+
+          <button
+            class="add-to-cart-btn"
+            onclick="addToCartFromProducts(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price})"
+          >
+            Add to Cart 🛒
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+</script>
 </body>
 </html>

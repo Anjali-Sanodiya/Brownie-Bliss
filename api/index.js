@@ -414,14 +414,26 @@ app.patch('/api/orders/:orderId/confirm-payment', adminAuth, async (req, res) =>
 app.patch('/api/orders/:orderId/status', adminAuth, async (req, res) => {
   try {
     const { status } = req.body;
+
+    if (!ORDER_STATUSES.includes(status)) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'Invalid order status' });
+    }
+
     const order = await Order.findOneAndUpdate(
       { order_id: req.params.orderId },
       { status },
       { new: true }
     );
-    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+
+    if (!order)
+      return res
+        .status(404)
+        .json({ success: false, message: 'Order not found' });
     res.json({ success: true });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
@@ -453,17 +465,41 @@ app.get('/api/stats', adminAuth, async (req, res) => {
   }
 });
 
-// Serve homepage explicitly (IMPORTANT for Vercel)
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// ─── START ─────────────────────────────────────────────────────────────────────
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ success: false, message: 'Something went wrong!' });
+});
+
+// ─── STARTUP FUNCTION ──────────────────────────────────────────────────────────
+function startServer(port) {
+  const server = app.listen(port, () => {
+    console.log(`🚀 Server running at http://localhost:${port}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE' && !process.env.PORT) {
+      const nextPort = Number(port) + 1;
+
+      console.warn(`⚠️ Port ${port} is already in use. Trying ${nextPort}...`);
+
+      startServer(nextPort);
+      return;
+    }
+
+    console.error('❌ Server startup error:', err);
+    process.exit(1);
   });
 }
 
-module.exports = serverless(app);
-module.exports.app = app; // Export app for integration tests
+// ─── START LOCAL SERVER ────────────────────────────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  startServer(PORT);
+}
+
+// ─── EXPORTS ───────────────────────────────────────────────────────────────────
+module.exports = app;
+module.exports.handler = serverless(app);

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login — Brownie Bliss</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
@@ -14,6 +15,14 @@
         window.location.replace('admin.html');
       }
     </script>
+    <script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bb_theme') || 'light';
+      if (t === 'dark') document.documentElement.classList.add('dark');
+    } catch (_) {}
+  })();
+</script>
     <style>
         body {
             background: var(--cream);

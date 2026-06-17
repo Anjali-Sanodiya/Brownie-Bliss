@@ -33,10 +33,60 @@ a{
     text-decoration:none;
 }
 
+
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-dark);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-name {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  padding-top: 5px;
+}
+
+.logo-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #39251d;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  
+}
+
 /* =========================
    NAVBAR
 ========================= */
-
+nav{
+    display:flex;
+    gap:30px;
+}
 .premium-navbar{
 
     width:100%;

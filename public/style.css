@@ -75,6 +75,7 @@ header {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+
 }
 
 .header-inner {
@@ -100,15 +101,17 @@ header {
   color: var(--color-primary);
   letter-spacing: 1px;
   margin-bottom: 4px;
+  padding-top: 5px;
 }
 
 .logo-sub {
   font-family: "Cormorant Garamond", serif;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 3px;
-  color: var(--gold);
+  color: #39251d;
   text-transform: uppercase;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  
 }
 
 nav {
@@ -366,7 +369,6 @@ nav a:hover {
 
 /* VALUES STRIP */
 .values-strip {
-  background: var(--brown-mid);
   padding: 28px 30px;
 }
 
@@ -576,23 +578,30 @@ nav a:hover {
   border-color: var(--color-primary);
 }
 
-.products-grid,
-.all-products-grid {
+#productsGrid{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 240px));
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+}
+ .all-products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-content: center;
   gap: 28px;
   width: 100%;
 }
 
+
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 768px) {   
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) {     
   .products-grid {
     grid-template-columns: 1fr;
   }
@@ -10140,7 +10149,7 @@ html.dark .text-link {
 
 /* ── FIX 3: Toast always on top, never blurred ── */
 .toast {
-  z-index: 99999 !important;
+  z-index: 99999;
 }
 
 /* ── FIX 4: Customization modal dark mode polish ── */
@@ -10414,7 +10423,7 @@ html.dark .topping-price {
 
 .bb-reviews {
   padding: 80px 40px;
-  background: #fffaf5;
+  background: #191010;
   text-align: center;
 }
 
@@ -10431,13 +10440,11 @@ html.dark .topping-price {
   font-family: 'Playfair Display', serif;
   font-size: 2.8rem;
   margin-bottom: 50px;
-  color: #3e2723;
-}
-
-.bb-reviews h2 em {
   color: #c49b3f;
   font-style: italic;
 }
+
+
 
 /* ===== Horizontal Scroll Layout ===== */
 
@@ -10816,6 +10823,9 @@ video {
   }
 }
 
+#feedback{
+   background-color: #2a140b !important;
+}
 .feedback-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -11024,7 +11034,7 @@ html.dark .products-section,
 html.dark .categories-section,
 html.dark .birthday-section,
 html.dark .favourites-page,
-html.dark .contact-page,
+html.dark .contact-page, 
 html.dark .page-header,
 html.dark .track-content-wrapper {
   background: var(--cream) !important;
@@ -11051,7 +11061,7 @@ html.dark .favourite-bakery-card {
 }
 
 /* Text */
-html.dark .section-title,
+/* html.dark .section-title,
 html.dark .section-title em,
 html.dark h1,
 html.dark h2,
@@ -11063,7 +11073,7 @@ html.dark .cart-title,
 html.dark .checkout-title,
 html.dark .track-container h2 {
   color: var(--text-dark) !important;
-}
+} */
 
 html.dark p,
 html.dark .product-desc,
@@ -11113,9 +11123,16 @@ html.dark .track-container button,
 html.dark .filter-tab.active,
 html.dark .filter-tab:hover {
   background: var(--gold) !important;
-  color: var(--brown-dark) !important;
+  color: #1a1008 !important;
+  /* color: var(--brown-dark) !important; */
   border-color: var(--gold) !important;
 }
+
+html.dark .hero-cta:hover{
+   color: var(--gold) !important;
+  background-color: #1a1008 !important;
+}
+
 
 /* Cart */
 html.dark .cart-item {
@@ -11151,6 +11168,10 @@ html.dark .favorite-btn {
 html.dark .favorite-btn.active {
   background: var(--gold) !important;
   color: var(--brown-dark) !important;
+}
+
+html.dark .hero-favourite-btn:hover{
+  color:#1a1008 !important;
 }
 
 /* Admin */
@@ -11474,4 +11495,5 @@ html.dark .copy-btn:hover {
     width: 24px;
     height: 24px;
   }
+}
 }
